@@ -59,7 +59,18 @@
       name: python-pip
       state: latest
 
+  - name: upgrade pip
+    pip:
+      name: pip
+      state: latest
+
   - name: install virtualenv
     pip:
       name: virtualenv
+
+  - name: install virtualenvwrapper
+    pip:
+      name: virtualenvwrapper
+
+
 
