@@ -17,14 +17,23 @@
     apt:
       update_cache: true
 
+  - name: install pip
+    apt:
+      name: python-pip
+      state: latest
+
+  - name: install virtualenv
+    pip:
+      name: virtualenv
+
   - name: install openvswitch
-    action: apt pkg={{item}} state=installed
+    action: apt pkg={{item}} state=latest
     with_items:
       - openvswitch-common
       - openvswitch-switch
 
   - name: install virtualbox and vagrant
-    action: apt pkg={{item}} state=installed
+    action: apt pkg={{item}} state=latest
     with_items:
       - virtualbox
       - vagrant
