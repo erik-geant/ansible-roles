@@ -1,27 +1,30 @@
 ---
-- hosts: all
+- hosts: vagrant
+  become: true
   gather_facts: false
 
   tasks:
   - name: install python 2
-    become: true
     raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
 
+
+- hosts: all
+  become: true
+  gather_facts: true
+
+  tasks:
   - name: install virtualbox and vagrant
-    become: true
     action: apt pkg={{item}} state=installed
     with_items:
       - virtualbox
       - vagrant
 
   - name: install wireshark
-    become: true
     apt:
       name: wireshark
       state: installed
 
   - name: setuid dumpcap
-    become: true
     file:
       path: /usr/bin/dumpcap
       owner: root
