@@ -1,14 +1,5 @@
 ---
 
-# basic vagrant box doesn't have python installed
-- hosts: vagrant
-  become: true
-  gather_facts: false
-
-  tasks:
-  - name: install python 2
-    raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
-
 # install openvswitch & related
 - hosts: all
   become: true
