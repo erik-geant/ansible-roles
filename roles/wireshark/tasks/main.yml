@@ -1,0 +1,12 @@
+---
+- name: install wireshark
+  apt:
+    name: wireshark
+    state: installed
+
+- name: setuid dumpcap
+  file:
+    path: /usr/bin/dumpcap
+    owner: root
+    group: root
+    mode: 04755 

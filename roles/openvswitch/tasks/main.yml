@@ -1,0 +1,6 @@
+---
+- name: install openvswitch
+  action: apt pkg={{item}} state=latest
+  with_items:
+    - openvswitch-common
+    - openvswitch-switch

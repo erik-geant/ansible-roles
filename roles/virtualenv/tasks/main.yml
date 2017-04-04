@@ -1,0 +1,25 @@
+---
+- name: update apt cache
+  apt:
+    update_cache: true
+
+- name: install pip
+  apt:
+    name: python-pip
+    state: latest
+
+- name: upgrade pip
+  pip:
+    name: pip
+    state: latest
+
+- name: install virtualenv
+  pip:
+    name: virtualenv
+    state: latest
+
+#  - name: install virtualenvwrapper
+#    pip:
+#      name: virtualenvwrapper
+
+
