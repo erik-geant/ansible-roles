@@ -1,7 +1,6 @@
 ---
 - user:
     name: faucet
-    group: faucet
 
 - name: add faucet to sudoers
   lineinfile:
