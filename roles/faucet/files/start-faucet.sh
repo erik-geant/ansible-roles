@@ -1,8 +1,11 @@
 #!/bin/bash
-DEFAULTFILE=/etc/default/faucet
-. $DEFAULTFILE
+
+. ~faucet/virtenv/bin/activate
+. /etc/default/faucet
+
 export FAUCET_CONFIG
 export FAUCET_LOG
 export FAUCET_EXCEPTION_LOG
-sudo -E -u $FAUCET_USER $RYU_MANAGER --config-file=$FAUCET_RYU_CONF --ofp-listen-host=$FAUCET_LISTEN_HOST --ofp-tcp-listen-port=$FAUCET_LISTEN_PORT $FAUCET_APP_DIR/faucet.py
+
+ryu-manager --config-file=$FAUCET_RYU_CONF --ofp-listen-host=$FAUCET_LISTEN_HOST --ofp-tcp-listen-port=$FAUCET_LISTEN_PORT $FAUCET_APP_DIR/faucet.py
 
