@@ -10,3 +10,12 @@
     owner: root
     group: root
     mode: 04755 
+
+- name: enable X11 forwarding
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    line: "X11Forwarding yes"
+    state: present
+  notify:
+  - restart sshd
+
