@@ -12,6 +12,6 @@ ansible_ssh_private_key_file=/Users/reid/.ssh/sdn_test_rsa
 [vagrant:vars]
 ansible_port=2222
 ansible_user=ubuntu
-ansible_ssh_private_key_file=/Users/reid/ansible_working/sdn_vm_test/.vagrant/machines/default/virtualbox/private_key
+ansible_ssh_private_key_file=.vagrant/machines/default/virtualbox/private_key
 ansible_ssh_extra_args=-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
 
