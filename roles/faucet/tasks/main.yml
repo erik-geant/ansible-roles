@@ -12,11 +12,18 @@
     validate: visudo -cf %s
 
 - name: checkout faucet
-  become_user: faucet
+#  become_user: faucet
   git:
     clone: yes
     dest: ~faucet/faucet
     repo: https://github.com/REANNZ/faucet.git
+
+- name: set faucet repo owner to faucet user
+  file:
+    dest: ~faucet/faucet
+    owner: faucet
+    group: faucet
+    recurse: yes
 
 - name: /etc/opt/faucet
   file:
@@ -55,10 +62,19 @@
     mode: 0755
 
 - name: init faucet virtenv
-  become_user: faucet
+#  become_user: faucet
   pip:
     requirements: ~faucet/faucet/requirements.txt
     virtualenv: ~faucet/virtenv
+
+- name: set virtenv owner to faucet user
+  file:
+    dest: ~faucet/virtenv
+    owner: faucet
+    group: faucet
+    recurse: yes
+
+
 
 
 
