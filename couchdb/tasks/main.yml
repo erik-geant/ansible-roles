@@ -9,3 +9,16 @@
   apt:
     name: couchdb
     state: present
+
+- name: listen on all interfaces
+  ini_file:
+    dest: /etc/couchdb/local.ini
+    section: httpd
+    option: bind_address
+    value: 0.0.0.0
+
+- name: restart couchdb
+  service:
+    name: couchdb
+    state: restarted
+
