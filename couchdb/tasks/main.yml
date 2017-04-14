@@ -1,5 +1,5 @@
 ---
-# cf. https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-ansible-on-ubuntu-14-04
+# cf. https://www.digitalocean.com/community/tutorials/how-to-install-couchdb-and-futon-on-ubuntu-14-04
 - name: add couchdb stable repo
   apt_repository:
     repo: ppa:couchdb/stable
