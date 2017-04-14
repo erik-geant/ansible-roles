@@ -1,0 +1,11 @@
+---
+- name: add couchdb stable repo
+  apt_repository:
+    repo: ppa:couchdb/stable
+    state: present
+    update_cache: yes
+
+- name: install couchdb
+  apt:
+    name: couchdb
+    state: present
