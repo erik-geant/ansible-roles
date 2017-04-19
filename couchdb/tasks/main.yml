@@ -11,12 +11,27 @@
     name: couchdb
     state: present
 
-- name: listen on all interfaces
+- name: listen on all interfaces 
   ini_file:
     dest: /etc/couchdb/local.ini
     section: httpd
     option: bind_address
     value: 0.0.0.0
+
+- name: set require_valid_user = true 
+  ini_file:
+    dest: /etc/couchdb/local.ini
+    section: couch_httpd_auth 
+    option: require_valid_user
+    value: 'true'
+
+- name: configure http authentication
+  lineinfile:
+    dest: /etc/couchdb/local.ini
+    regexp: '^WWW-Authenticate'
+    insertafter: '^;WWW-Authenticate'
+    line: 'WWW-Authenticate = Basic realm="administrator"'
+
 
 - name: restart couchdb
   service:
