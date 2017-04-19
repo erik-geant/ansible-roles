@@ -32,6 +32,12 @@
     insertafter: '^;WWW-Authenticate'
     line: 'WWW-Authenticate = Basic realm="administrator"'
 
+- name: set require_valid_user = true 
+  ini_file:
+    dest: /etc/couchdb/local.ini
+    section: admins
+    option: couch
+    value: 123
 
 - name: restart couchdb
   service:
