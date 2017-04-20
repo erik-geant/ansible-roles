@@ -29,15 +29,15 @@
     method: PUT
     body: '"123"'
 
-- name: create faucet database
-  uri:
-    url: http://localhost:5984/faucet
-    method: PUT
-    user: couch
-    password: 123
-    force_basic_auth: yes
-    # cf. http://docs.couchdb.org/en/2.0.0/api/database/common.html
-    status_code: 201
+#- name: create faucet database
+#  uri:
+#    url: http://localhost:5984/faucet
+#    method: PUT
+#    user: couch
+#    password: 123
+#    force_basic_auth: yes
+#    # cf. http://docs.couchdb.org/en/2.0.0/api/database/common.html
+#    status_code: 201
 
 
 - name: set require_valid_user = true 
