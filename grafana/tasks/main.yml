@@ -1,0 +1,57 @@
+---
+- name: add Package Cloud (grafana) repo key
+  apt_key:
+    url: https://packagecloud.io/gpg.key
+    state: present
+    validate_certs: no
+
+- name: add influxdb repo key
+  apt_key:
+    url: https://repos.influxdata.com/influxdb.key
+    state: present
+    validate_certs: no
+
+- name: add grafana dist repo
+  apt_repository:
+    repo: deb https://packagecloud.io/grafana/stable/debian/ jessie main
+    state: present 
+    filename: grafana 
+    update_cache: yes
+
+- name: add influxdb dist repo
+  apt_repository:
+    repo: deb https://repos.influxdata.com/ubuntu xenial stable
+    state: present 
+    filename: influxdb 
+    update_cache: yes
+
+- name: install influxdb & grafana
+  action: apt pkg={{item}} state=latest
+  with_items:
+    - influxdb
+    - grafana
+
+- name: start influxdb
+  service:
+    name: influxdb
+    state: started
+
+- name: create faucet database in influxdb
+  command: /usr/bin/influx -execute 'create database faucet'
+
+- name: create grafana user in influxdb
+  command: /usr/bin/influx -execute "create user grafana with password 'faucet' with all privileges"
+
+- name: enable influxdb auth
+  ini_file:
+    dest: /etc/influxdb/influxdb.conf
+    section: http
+    option: auth-enabled
+    value: 'true'
+
+- name: start influxdb
+  service:
+    name: influxdb
+    state: restarted
+
+
