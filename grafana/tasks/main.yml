@@ -49,9 +49,23 @@
     option: auth-enabled
     value: 'true'
 
-- name: start influxdb
+- name: restart influxdb
   service:
     name: influxdb
     state: restarted
 
+- name: start grafana
+  service:
+    name: grafana-server
+    state: started
+
+- name: create influx-faucet grafana datasource
+  uri:
+    url: http://localhost:3000/api/datasources
+    method: POST
+    user: admin
+    password: admin
+    body_format: json
+    force_basic_auth: yes
+    body: '{"name":"influx-faucet","type":"influxdb","url":"http://localhost:8086","access":"proxy","isDefault":true,"database":"faucet","user":"grafana","password":"faucet"}'
 
