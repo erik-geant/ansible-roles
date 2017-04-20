@@ -18,6 +18,28 @@
     option: bind_address
     value: 0.0.0.0
 
+- name: start couchdb
+  service:
+    name: couchdb
+    state: started
+
+- name: create couch admin user
+  uri:
+    url: http://localhost:5984/_config/admins/couch
+    method: PUT
+    body: '"123"'
+
+- name: create faucet database
+  uri:
+    url: http://localhost:5984/faucet
+    method: PUT
+    user: couch
+    password: 123
+    force_basic_auth: yes
+    # cf. http://docs.couchdb.org/en/2.0.0/api/database/common.html
+    status_code: 201
+
+
 - name: set require_valid_user = true 
   ini_file:
     dest: /etc/couchdb/local.ini
@@ -32,15 +54,9 @@
     insertafter: '^;WWW-Authenticate'
     line: 'WWW-Authenticate = Basic realm="administrator"'
 
-- name: set require_valid_user = true 
-  ini_file:
-    dest: /etc/couchdb/local.ini
-    section: admins
-    option: couch
-    value: 123
-
 - name: restart couchdb
   service:
     name: couchdb
     state: restarted
+
 
