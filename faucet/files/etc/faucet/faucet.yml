@@ -1,8 +1,27 @@
 version: 2
-#vlans:
-#    4090:
-#        name: "trusted network"
-#        unicast_flood: True
+vlans:
+    2:
+        name: "Sysadmin"
+        unicast_flood: True
+    3:
+        name: "VoIP"
+        unicast_flood: True
+    4:
+        name: "Office"
+        unicast_flood: True
+    7:
+        name: "Guests"
+        unicast_flood: True
+    20:
+        name: "IPv6 only"
+        unicast_flood: True
+    983:
+        name: "TOMBS managment network"
+        unicast_flood: True
+    984:
+        name: "TOMBS VM network"
+        unicast_flood: True
+
 acls:
     101:
         - rule:
@@ -15,16 +34,22 @@ acls:
 dps:
     windscale-faucet-1:
         dp_id: 0x1aeb949202
-        description: "Josh's experimental AT-X930"
+        description: "SDNCA"
         hardware: "Allied-Telesis"
         interfaces:
             1:
-#                tagged_vlans: [4090]
                 name: "port1.0.1"
                 description: "windscale"
             2:
-                native_vlan: 4090
-                tagged_vlans: [2,3,4,5,6,7,8,9,10,11]
+                tagged_vlans: [2,3,4,7,20,983,984]
                 name: "port1.0.2"
                 description: "vek-x"
+            37:
+                native_vlan: 2
+                name: "port1.0.37"
+                description: "port #18 near Erik's desk"
+            38:
+                native_vlan: 2
+                name: "port1.0.38"
+                description: "port #17 near Erik's desk"
 
