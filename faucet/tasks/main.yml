@@ -25,30 +25,46 @@
     group: faucet
     recurse: yes
 
-- name: /etc/opt/faucet
+- name: create faucet config dir
   file:
-    path: /etc/opt/faucet
+    path: /etc/faucet
     state: directory
 
-- name: /var/log/faucet
+- name: create faucet log dir
   file:
     path: /var/log/faucet
     state: directory
     owner: faucet
     group: faucet
 
-- name: create /etc/default/faucet
+- name: create /etc/faucet/faucet-environment.sh
   copy:
-    src: etc_default_faucet
-    dest: /etc/default/faucet
+    src: etc/faucet/faucet-environment.sh
+    dest: /etc/faucet/faucet-environment.sh
+    owner: root
+    group: root
+    mode: 0755
+
+- name: create /etc/faucet/faucet.yml
+  copy:
+    src: etc/faucet/faucet.yml
+    dest: /etc/faucet/faucet.yml
     owner: root
     group: root
     mode: 0644
 
-- name: create /etc/opt/faucet/faucet.yml
+- name: create /etc/faucet/ryu.conf
   copy:
-    src: faucet.yml
-    dest: /etc/opt/faucet/faucet.yml
+    src: etc/faucet/ryu.conf
+    dest: /etc/faucet/ryu.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: create faucet.service
+  copy:
+    src: etc/systemd/system/faucet.service
+    dest: /etc/systemd/system/faucet.service
     owner: root
     group: root
     mode: 0644
@@ -67,6 +83,16 @@
     requirements: ~faucet/faucet/requirements.txt
     virtualenv: ~faucet/virtenv
 
+- name: add faucet to virtenv
+#  shell:
+#    "source ~faucet/virtenv/bin/activate; pip install -e ~faucet/faucet"
+  pip:
+    virtualenv: ~faucet/virtenv
+    editable: yes
+    chdir: ~faucet/faucet
+    name: "."
+    state: present
+
 - name: set virtenv owner to faucet user
   file:
     dest: ~faucet/virtenv
@@ -74,10 +100,9 @@
     group: faucet
     recurse: yes
 
-
-
-
-
-
-
-
+- name: (re)start faucet service
+  systemd:
+    state: restarted
+    daemon_reload: yes
+    name: faucet
+    enabled: yes
