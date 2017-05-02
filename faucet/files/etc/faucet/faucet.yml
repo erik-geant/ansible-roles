@@ -37,19 +37,21 @@ dps:
         description: "SDNCA"
         hardware: "Allied-Telesis"
         interfaces:
-            1:
-                name: "port1.0.1"
-                description: "windscale"
             2:
                 tagged_vlans: [2,3,4,7,20,983,984]
                 name: "port1.0.2"
                 description: "vek-x"
             37:
-                native_vlan: 2
+                native_vlan: 4
                 name: "port1.0.37"
                 description: "port #18 near Erik's desk"
             38:
-                native_vlan: 2
+                native_vlan: 4
                 name: "port1.0.38"
                 description: "port #17 near Erik's desk"
+
+            39:
+                native_vlan: 4
+                name: "port1.0.39"
+                description: "port #19 near Claus' desk"
 
