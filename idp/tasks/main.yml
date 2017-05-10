@@ -1,0 +1,117 @@
+---
+
+# https://www.helloitsliam.com/2014/12/23/install-configure-and-test-simplesamlphp-for-authentication-testing/
+
+- name: update apt cache
+  apt:
+    update_cache: yes
+
+- name: install apache & php
+  action: apt pkg={{item}} state=latest
+  with_items:
+    - apache2
+    - libapache2-mod-php
+
+- stat:
+    path: "{{ ssp_dirname }}"
+  register: p
+
+- name: download & unpack go binary distribution
+  unarchive:
+    src: "{{ ssp_dist_url }}"
+    remote_src: true
+    dest: /usr/local
+  when: p.stat.isdir is not defined
+
+- name: rename simplesamlphp dir
+  command: mv {{ ssp_dist_dirname }} {{ ssp_dirname }}
+  args:
+    creates: "{{ ssp_dirname }}"
+
+- name: chown ssp dir
+  file:
+    path: "{{ ssp_dirname }}"
+    owner: root
+    group: www-data
+    state: directory
+    recurse: yes
+
+- name: create /etc/apache2/sites-available/simplesamlphp.conf
+  copy:
+    src: simplesamlphp-apache.conf
+    dest: /etc/apache2/conf-available/simplesamlphp.conf
+    owner: root
+    group: root
+
+- name: add ref to simplesamlphp/apache alias
+  lineinfile:
+    dest: /etc/apache2/sites-available/000-default.conf
+    regexp: simplesamlphp\.conf
+    line: Include conf-available/simplesamlphp.conf
+    insertbefore: '^\s*</VirtualHost>'
+
+- name: update admin password
+  replace:
+    dest: "{{ ssp_dirname }}/config/config.php"
+    regexp: "'auth\\.adminpassword'\\s*=>\\s*'.*'\\s*,"
+    replace: "'auth.adminpassword' => 'admin',"
+
+- name: create ssl key/cert dir
+  file:
+    path: /etc/apache2/ssl
+    state: directory
+    owner: root
+    group: www-data
+    mode: 0755
+    
+- name: copy server private key
+  copy:
+    src: ssl/server.key
+    dest: /etc/apache2/ssl/server.key
+    owner: root
+    group: www-data
+
+- name: copy server certificate 
+  copy:
+    src: ssl/server.cert
+    dest: /etc/apache2/ssl/server.cert
+    owner: root
+    group: www-data
+
+- name: install apache ssl
+  command: a2enmod ssl
+
+- name: copy installed ssl config
+  command: cp /etc/apache2/sites-available/default-ssl.conf /etc/apache2/sites-available/000-default-ssl.conf
+
+- name: link an enabled config to available ssl config
+  file:
+    src: /etc/apache2/sites-available/000-default-ssl.conf
+    dest: /etc/apache2/sites-enabled/000-default-ssl.conf
+    owner: root
+    group: www-data
+    state: link
+ 
+- name: update configured private key path
+  replace:
+    dest: /etc/apache2/sites-available/000-default-ssl.conf
+    regexp: '^\s*SSLCertificateKeyFile\s+.*$'
+    replace: "                SSLCertificateKeyFile /etc/apache2/ssl/server.key"
+
+- name: update configured cert path
+  replace:
+    dest: /etc/apache2/sites-available/000-default-ssl.conf
+    regexp: '^\s*SSLCertificateFile\s+.*$'
+    replace: "                SSLCertificateFile /etc/apache2/ssl/server.cert"
+
+- name: add ref to simplesamlphp/apache alias
+  lineinfile:
+    dest: /etc/apache2/sites-available/000-default-ssl.conf
+    regexp: simplesamlphp\.conf
+    line: Include conf-available/simplesamlphp.conf
+    insertbefore: '^\s*</VirtualHost>'
+
+- name: restart apache
+  service:
+    name: apache2
+    state: restarted
