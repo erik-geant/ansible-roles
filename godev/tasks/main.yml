@@ -1,0 +1,28 @@
+- stat:
+    path: /usr/local/go
+  register: p
+
+- name: download & unpack go binary distribution
+  become: true
+  unarchive:
+    src: https://storage.googleapis.com/golang/go1.8.1.linux-amd64.tar.gz
+    remote_src: true
+    dest: /usr/local
+  when: p.stat.isdir is not defined
+
+- name: create ~faucet/start-faucet.sh
+  copy:
+    src: bashrc.go
+    dest: ~/.bashrc.go
+
+- name: update path
+  lineinfile:
+    dest: ~/.bashrc
+    regexp: '\.bashrc\.go'
+    insertafter: EOF
+    line: '. "$HOME/.bashrc.go"'
+
+- name: create GOPATH
+  file:
+    dest: ~/go
+    state: directory
