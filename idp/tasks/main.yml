@@ -122,7 +122,19 @@
     - memcached
     - php-memcache
 
+- name: copy idp cert
+  copy:
+    src: idp_cert/server.crt
+    dest: "{{ ssp_dirname }}/cert/server.crt"
+    owner: root
+    group: www-data
 
+- name: copy idp private key
+  copy:
+    src: idp_cert/server.pem
+    dest: "{{ ssp_dirname }}/cert/server.pem"
+    owner: root
+    group: www-data
 
 - name: restart apache
   service:
