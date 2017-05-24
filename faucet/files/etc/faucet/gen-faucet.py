@@ -51,7 +51,7 @@ panels = {
         "3": { "port": "port1.0.10" },
         "4": { "port": "port1.0.13" },
         "6": { "port": "port1.0.14" },
-        "7": { "port": "port1.0.15", "vlan": "sysadmin", "info": "dick and jobs" },
+        "7": { "port": "port1.0.15", "vlan": "sysadmin", "info": "dick and max" },
         "9": { "port": "port1.0.16", "vlan": "sysadmin", "info": "camera, ruud etc."},
 
     },
