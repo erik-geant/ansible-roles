@@ -38,19 +38,37 @@ for i in range(FIRST_SDN_PORT, LAST_SDN_PORT+1):
 panels = {
     "1": {
         "12": { "port": "port1.0.3" },
-        "15": { "port": "port1.0.4", "vlan": "voip" },
         "2": { "port": "port1.0.5" },
         "11": { "port": "port1.0.6" },
         "17": { "port": "port1.0.7" },
         "18": { "port": "port1.0.8" },
         "19": { "port": "port1.0.9" },
-        "20": { "port": "port1.0.10", "vlan": "voip" },
         "22": { "port": "port1.0.11" },
         "24": { "port": "port1.0.12" },
     },
     "2": {
-        "1": { "port": "port1.0.13" },
+        "2": { "port": "port1.0.4" },
+        "3": { "port": "port1.0.10" },
+        "4": { "port": "port1.0.13" },
+        "6": { "port": "port1.0.14" },
+        "7": { "port": "port1.0.15", "vlan": "sysadmin", "info": "dick and jobs" },
+        "9": { "port": "port1.0.16", "vlan": "sysadmin", "info": "camera, ruud etc."},
+
     },
+    "3": {
+        "5": { "port": "port1.0.33", "vlan": "voip" },
+        "11": { "port": "port1.0.34", "vlan": "voip" },
+    },
+    "4": {
+        "11": { "port": "port1.0.35", "vlan": "voip" },
+    },
+    "6": {
+
+        "9": { "port": "port1.0.36", "vlan": "voip" },
+    },
+
+
+
 }
 
 for pan_num in panels:
@@ -58,8 +76,10 @@ for pan_num in panels:
         ppc = panels[pan_num][slot_num]
         assert ppc["port"] in ports.keys()
         ports[ppc["port"]]["vlan"] = ppc.get("vlan", "office")
-        ports[ppc["port"]]["description"] = "%s-%s" % (pan_num, slot_num)
-
+        description = "%s-%s" % (pan_num, slot_num)
+        if "info" in ppc:
+            description += " " + ppc["info"]
+        ports[ppc["port"]]["description"] = description
 
 port_list = sorted(ports.values(), key=lambda x: x["number"])
 
