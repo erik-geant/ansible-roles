@@ -26,5 +26,5 @@ dps:
             {{ port["number"] }}:
                 native_vlan: {{ port["vlan"] }}
                 name: "{{ port["name"] }}"
-                description: "{{ port["name"] }}"{% endfor %}
+                description: "{{ port["description"] }}"{% endfor %}
 
