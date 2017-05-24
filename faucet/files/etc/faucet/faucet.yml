@@ -50,59 +50,59 @@ dps:
             3:
                 native_vlan: office
                 name: "port1.0.3"
-                description: "port1.0.3"
+                description: "1-12"
             4:
                 native_vlan: office
                 name: "port1.0.4"
-                description: "port1.0.4"
+                description: "2-2"
             5:
                 native_vlan: office
                 name: "port1.0.5"
-                description: "port1.0.5"
+                description: "1-2"
             6:
                 native_vlan: office
                 name: "port1.0.6"
-                description: "port1.0.6"
+                description: "1-11"
             7:
                 native_vlan: office
                 name: "port1.0.7"
-                description: "port1.0.7"
+                description: "1-17"
             8:
                 native_vlan: office
                 name: "port1.0.8"
-                description: "port1.0.8"
+                description: "1-18"
             9:
                 native_vlan: office
                 name: "port1.0.9"
-                description: "port1.0.9"
+                description: "1-19"
             10:
                 native_vlan: office
                 name: "port1.0.10"
-                description: "port1.0.10"
+                description: "2-3"
             11:
                 native_vlan: office
                 name: "port1.0.11"
-                description: "port1.0.11"
+                description: "1-22"
             12:
                 native_vlan: office
                 name: "port1.0.12"
-                description: "port1.0.12"
+                description: "1-24"
             13:
                 native_vlan: office
                 name: "port1.0.13"
-                description: "port1.0.13"
+                description: "2-4"
             14:
                 native_vlan: office
                 name: "port1.0.14"
-                description: "port1.0.14"
+                description: "2-6"
             15:
-                native_vlan: office
+                native_vlan: sysadmin
                 name: "port1.0.15"
-                description: "port1.0.15"
+                description: "2-7 dick and jobs"
             16:
-                native_vlan: office
+                native_vlan: sysadmin
                 name: "port1.0.16"
-                description: "port1.0.16"
+                description: "2-9 camera, ruud etc."
             17:
                 native_vlan: office
                 name: "port1.0.17"
@@ -168,21 +168,21 @@ dps:
                 name: "port1.0.32"
                 description: "port1.0.32"
             33:
-                native_vlan: office
+                native_vlan: voip
                 name: "port1.0.33"
-                description: "port1.0.33"
+                description: "3-5"
             34:
-                native_vlan: office
+                native_vlan: voip
                 name: "port1.0.34"
-                description: "port1.0.34"
+                description: "3-11"
             35:
-                native_vlan: office
+                native_vlan: voip
                 name: "port1.0.35"
-                description: "port1.0.35"
+                description: "4-11"
             36:
-                native_vlan: office
+                native_vlan: voip
                 name: "port1.0.36"
-                description: "port1.0.36"
+                description: "6-9"
             37:
                 native_vlan: office
                 name: "port1.0.37"
