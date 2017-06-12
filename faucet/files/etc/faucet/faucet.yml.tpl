@@ -22,7 +22,7 @@ dps:
             2:
                 tagged_vlans: [{{ tagged_vlan_vids|join(',') }}]
                 name: "port1.0.2"
-                description: "sdnca"{% for port in ports %}
+                description: "lan trunk"{% for port in sdnca_ports %}
             {{ port["number"] }}:
                 native_vlan: {{ port["vlan"] }}
                 name: "{{ port["name"] }}"
@@ -36,9 +36,9 @@ dps:
             2:
                 tagged_vlans: [{{ tagged_vlan_vids|join(',') }}]
                 name: "port1.0.2"
-            48:
-                native_vlan: office
-                name: "port1.0.48"
-                description: "2-17 by erik's desk"
+                description: "lan trunk"{% for port in sdncb_ports %}
+            {{ port["number"] }}:
+                native_vlan: {{ port["vlan"] }}
+                name: "{{ port["name"] }}"
+                description: "{{ port["description"] }}"{% endfor %}
 
-        

@@ -1,8 +1,10 @@
 import os
 from jinja2 import Template 
 
-FIRST_SDN_PORT = 3
-LAST_SDN_PORT = 42
+
+INPUT_FILENAME = os.path.join(os.path.dirname(__file__), "faucet.yml.tpl")
+
+DEFAULT_VLAN = "office"
 
 VLANS = {
     "Sysadmin": 2,
@@ -14,11 +16,68 @@ VLANS = {
     "TOMBS VM network": 984,
 }
 
+SDNCA_FIRST_PORT = 3
+SDNCA_LAST_PORT = 42
+SDNCB_FIRST_PORT = 48
+SDNCB_LAST_PORT = 48
 
+SDNCA_PATCH_PORTS = {
+    "1-12": { "port": 3 },
+    "1-2": { "port": 5 },
+    "1-11": { "port": 6 },
+    "1-17": { "port": 7 },
+    "1-18": { "port": 8 },
+    "1-19": { "port": 9 },
+    "1-22": { "port": 11 },
+    "1-24": { "port": 12 },
 
-INPUT_FILENAME = os.path.join(os.path.dirname(__file__), "faucet.yml.tpl")
+    "2-2": { "port": 4 },
+    "2-3": { "port": 10 },
+    "2-4": { "port": 13 },
+    "2-6": { "port": 14 },
+    "2-7": { "port": 15,
+        "vlan": "sysadmin", "info": "dick and max" },
+    "2-9": { "port": 16,
+        "vlan": "sysadmin", "info": "camera, ruud etc."},
+
+    "3-5": { "port": 33, "vlan": "voip" },
+    "3-11": { "port": 34, "vlan": "voip" },
+
+    "4-11": { "port": 35, "vlan": "voip" },
+    "6-9": { "port": 36, "vlan": "voip" },
+}
+
+SDNCB_PATCH_PORTS = {
+    "2-17": { "port": 48, "info": "by erik's desk" }
+}
+
 
 def _vlan_label(s): return s.lower().replace(" ", "-")
+
+
+def _gen_port_list(first_port_num, last_port_num, patch_map):
+    ports = {}
+    for i in range(first_port_num, last_port_num+1):
+        name = "port1.0.%d" % i
+        ports[name] = {
+            "number": i,
+            "description": name,
+            "name": name,
+            "vlan": DEFAULT_VLAN }
+
+    for patch_name, port_info in patch_map.items():
+        port_name = "port1.0.%d" % port_info["port"]
+        assert port_name in ports.keys()
+        ports[port_name]["vlan"] = port_info.get("vlan", DEFAULT_VLAN)
+        description = patch_name
+        if "info" in port_info: 
+            description += " " + port_info["info"]
+        ports[port_name]["description"] = description
+
+    return sorted(ports.values(), key=lambda x: x["number"])
+
+with open(INPUT_FILENAME) as f:
+    template = Template(f.read())
 
 vlan_list = [ {
     "label": _vlan_label(k),
@@ -26,68 +85,10 @@ vlan_list = [ {
     "vid": v} for k,v in VLANS.items() ]
 vlan_list = sorted(vlan_list, key=lambda x: x["vid"])
 
-ports = {}
-for i in range(FIRST_SDN_PORT, LAST_SDN_PORT+1):
-    name = "port1.0.%d" % i
-    ports[name] = {
-        "number": i,
-        "description": name,
-        "name": name,
-        "vlan": "office" }
-
-panels = {
-    "1": {
-        "12": { "port": "port1.0.3" },
-        "2": { "port": "port1.0.5" },
-        "11": { "port": "port1.0.6" },
-        "17": { "port": "port1.0.7" },
-        "18": { "port": "port1.0.8" },
-        "19": { "port": "port1.0.9" },
-        "22": { "port": "port1.0.11" },
-        "24": { "port": "port1.0.12" },
-    },
-    "2": {
-        "2": { "port": "port1.0.4" },
-        "3": { "port": "port1.0.10" },
-        "4": { "port": "port1.0.13" },
-        "6": { "port": "port1.0.14" },
-        "7": { "port": "port1.0.15", "vlan": "sysadmin", "info": "dick and max" },
-        "9": { "port": "port1.0.16", "vlan": "sysadmin", "info": "camera, ruud etc."},
-
-    },
-    "3": {
-        "5": { "port": "port1.0.33", "vlan": "voip" },
-        "11": { "port": "port1.0.34", "vlan": "voip" },
-    },
-    "4": {
-        "11": { "port": "port1.0.35", "vlan": "voip" },
-    },
-    "6": {
-
-        "9": { "port": "port1.0.36", "vlan": "voip" },
-    },
-
-
-
-}
-
-for pan_num in panels:
-    for slot_num in panels[pan_num]:
-        ppc = panels[pan_num][slot_num]
-        assert ppc["port"] in ports.keys()
-        ports[ppc["port"]]["vlan"] = ppc.get("vlan", "office")
-        description = "%s-%s" % (pan_num, slot_num)
-        if "info" in ppc:
-            description += " " + ppc["info"]
-        ports[ppc["port"]]["description"] = description
-
-port_list = sorted(ports.values(), key=lambda x: x["number"])
-
-with open(INPUT_FILENAME) as f:
-    template = Template(f.read())
 
 print template.render(
     vlans=vlan_list,
     tagged_vlan_vids=[x["label"] for x in vlan_list],
-    ports=port_list)
+    sdnca_ports=_gen_port_list(SDNCA_FIRST_PORT, SDNCA_LAST_PORT, SDNCA_PATCH_PORTS),
+    sdncb_ports=_gen_port_list(SDNCB_FIRST_PORT, SDNCB_LAST_PORT, SDNCB_PATCH_PORTS))
 
