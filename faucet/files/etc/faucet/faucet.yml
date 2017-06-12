@@ -38,7 +38,7 @@ acls:
             actions:
                 allow: 0
 dps:
-    windscale-faucet-1:
+    at510-top:
         dp_id: 0x1aeb949202
         description: "SDNCA"
         hardware: "Allied-Telesis"
@@ -98,7 +98,7 @@ dps:
             15:
                 native_vlan: sysadmin
                 name: "port1.0.15"
-                description: "2-7 dick and jobs"
+                description: "2-7 dick and max"
             16:
                 native_vlan: sysadmin
                 name: "port1.0.16"
@@ -208,3 +208,17 @@ dps:
                 name: "port1.0.42"
                 description: "port1.0.42"
 
+    at510-bottom:
+        dp_id: 0x1aeb95277d
+        description: "SDNCB"
+        hardware: "Allied-Telesis"
+        interfaces:
+            2:
+                tagged_vlans: [sysadmin,voip,office,guests,ipv6-only,tombs-managment-network,tombs-vm-network]
+                name: "port1.0.2"
+            48:
+                native_vlan: office
+                name: "port1.0.48"
+                description: "2-17 by erik's desk"
+
+        

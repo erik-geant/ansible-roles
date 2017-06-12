@@ -14,7 +14,7 @@ acls:
             actions:
                 allow: 0
 dps:
-    windscale-faucet-1:
+    at510-top:
         dp_id: 0x1aeb949202
         description: "SDNCA"
         hardware: "Allied-Telesis"
@@ -28,3 +28,17 @@ dps:
                 name: "{{ port["name"] }}"
                 description: "{{ port["description"] }}"{% endfor %}
 
+    at510-bottom:
+        dp_id: 0x1aeb95277d
+        description: "SDNCB"
+        hardware: "Allied-Telesis"
+        interfaces:
+            2:
+                tagged_vlans: [{{ tagged_vlan_vids|join(',') }}]
+                name: "port1.0.2"
+            48:
+                native_vlan: office
+                name: "port1.0.48"
+                description: "2-17 by erik's desk"
+
+        
