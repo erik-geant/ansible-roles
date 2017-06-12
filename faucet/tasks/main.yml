@@ -11,12 +11,18 @@
     mode: 0440
     validate: visudo -cf %s
 
+- name: install git
+  apt:
+    name: git
+    state: present
+
 - name: checkout faucet
 #  become_user: faucet
   git:
     clone: yes
     dest: ~faucet/faucet
-    repo: https://github.com/REANNZ/faucet.git
+#    repo: https://github.com/REANNZ/faucet.git
+    repo: https://github.com/erik-geant/faucet.git
 
 - name: set faucet repo owner to faucet user
   file:
