@@ -398,7 +398,7 @@ dps:
                 name: "port1.0.47"
                 description: "port1.0.47"
             48:
-                native_vlan: office
+                native_vlan: sysadmin
                 name: "port1.0.48"
                 description: "2-17 by erik's desk"
 

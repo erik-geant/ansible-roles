@@ -48,7 +48,7 @@ SDNCA_PATCH_PORTS = {
 }
 
 SDNCB_PATCH_PORTS = {
-    "2-17": { "port": 48, "info": "by erik's desk" }
+    "2-17": { "port": 48, "vlan": "sysadmin", "info": "by erik's desk" }
 }
 
 
