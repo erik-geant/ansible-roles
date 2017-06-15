@@ -1,0 +1,21 @@
+---
+- name: add virtualbox repo key
+  apt_key:
+    url: https://www.virtualbox.org/download/oracle_vbox_2016.asc
+    state: present
+    validate_certs: no
+
+- name: add virtualbox dist repo
+  apt_repository:
+    repo: deb http://download.virtualbox.org/virtualbox/debian {{ ansible_distribution_release }} contrib
+    state: present 
+    filename: vb 
+    update_cache: yes
+
+- name: install required packages
+  apt: name={{item}} state=installed
+  with_items:
+    - linux-headers-{{ ansible_kernel }}
+    - build-essential
+    - virtualbox-5.1
+    - dkms
