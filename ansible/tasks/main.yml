@@ -1,0 +1,24 @@
+---
+- name: install pip
+  apt:
+    name: python-pip
+#    name: python3-pip
+    state: latest
+
+- name: upgrade pip
+  pip:
+    name: pip
+    state: latest
+
+- name: install required headers
+  apt: name={{item}} state=latest
+  with_items:
+    - python-dev
+#    - python3-dev
+    - libssl-dev
+
+- name: install ansible
+  pip:
+    name: ansible
+    state: latest
+ 
