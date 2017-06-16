@@ -1,0 +1,17 @@
+---
+- name: copy ovs config script
+  copy:
+    src: ovs-setup.sh
+    dest: /root/ovs-setup.sh
+    owner: root
+    group: root
+    mode: 0755
+
+- name: copy vagrant vm config
+  copy:
+    src: Vagrantfile
+    dest: /root/Vagrantfile
+    owner: root
+    group: root
+    mode: 0644
+ 
