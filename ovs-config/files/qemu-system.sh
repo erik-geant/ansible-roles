@@ -1,19 +1,16 @@
 #!/bin/sh
 
-#/etc/qemu-ifup xyzaaa
-#qemu-system-x86_64 -enable-kvm -net nic -net tap,ifname=xyzaaa -hda /images/b.qcow2 -m 512 -nographic
-#/etc/qemu-ifdown xyzaaa
+VMNAME=xyzabc
+VNCIDX=5
+IMAGE_FILE=/images/$VMNAME.qcow2
 
-#-daemonize
+cp /images/debian_wheezy_amd64_standard.qcow2 $IMAGE_FILE
 
-#qemu-system-x86_64  -enable-kvm -net nic -net tap,ifname=xyzaaa -hda /images/b.qcow2 -m 512 -vnc :5,vncpass -daemonize
-
-#qemu-system-x86_64  -enable-kvm -net nic -net tap,ifname=xyzaaa -hda /images/b.qcow2 -m 512 -vnc :5,vncpass -monitor stdio
-
-#  -daemonize -display none
-
-# qemu-system-x86_64  -enable-kvm -net nic -net tap,ifname=xyzaaa -hda /images/b.qcow2 -m 512  -daemonize
-# qemu-system-x86_64  -enable-kvm -net nic -net tap,ifname=xyzaaa -hda /images/b.qcow2 -m 512  -daemonize -display none
-
-qemu-system-x86_64  -enable-kvm -net nic -net tap,ifname=xyzaaa -hda /images/b.qcow2 -m 512 -vnc :5 -daemonize
-
+qemu-system-x86_64  \
+    -enable-kvm \
+    -net nic \
+    -net tap,ifname=$VMNAME \
+    -hda $IMAGE_FILE \
+    -m 512 \
+    -vnc :$VNCIDX \
+    -daemonize
