@@ -34,4 +34,20 @@
   with_items:
     - qemu-ifup
     - qemu-ifdown
- 
+
+- name: create /images directory
+  file:
+    path: /images
+    state: directory
+    mode: 0755
+    owner: root
+    group: root
+  
+- name: download debian_wheezy_amd64_standard.qcow2 
+  get_url:
+    url:  https://people.debian.org/~aurel32/qemu/amd64/debian_wheezy_amd64_standard.qcow2 
+    dest: /images
+    owner: root
+    group: root
+    mode: 0644
+
