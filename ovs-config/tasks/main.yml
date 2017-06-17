@@ -7,6 +7,15 @@
     group: root
     mode: 0755
 
+- name: copy ovs config script
+  copy:
+    src: qemu-system.sh
+    dest: /root/qemu-system.sh
+    owner: root
+    group: root
+    mode: 0755
+
+
 - name: copy vagrant vm config
   copy:
     src: Vagrantfile
@@ -14,4 +23,15 @@
     owner: root
     group: root
     mode: 0644
+
+- name: install qemu-ifup/down
+  copy:
+    src: "{{ item }}"
+    dest: /etc
+    owner: root
+    group: root
+    mode: 0755
+  with_items:
+    - qemu-ifup
+    - qemu-ifdown
  
