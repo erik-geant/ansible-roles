@@ -1,0 +1,11 @@
+---
+- name: install qemu packages
+  apt: name={{item}} state=installed
+  with_items:
+    - qemu-kvm
+# for newer than jessie
+#    - libvirt-clients
+#    - libvirt-daemon-system
+# for jessie
+    - libvirt-bin
+
