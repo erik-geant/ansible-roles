@@ -1,8 +1,4 @@
 ---
-- name: update apt cache
-  apt:
-    update_cache: true
-
 - name: install pip
   apt:
     name: python-pip
