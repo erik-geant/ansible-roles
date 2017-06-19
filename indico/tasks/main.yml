@@ -1,0 +1,26 @@
+---
+- name: install package dependencies
+  apt: name={{item}} state=installed
+  with_items:
+    - libxslt1-dev
+    - libxml2-dev
+    - libffi-dev
+    - libpcre3-dev
+    - libyaml-dev
+    - build-essential
+    - redis-server
+    - uwsgi
+    - uwsgi-plugin-python
+
+#- name: install libjpeg turbo dev (debian)
+#  apt:
+#    name: libjpeg62-turbo-dev
+
+- name: install libjpeg turbo dev (ubuntu)
+  apt: name={{item}} state=installed
+  with_items:
+    - libjpeg-turbo8-dev
+    - zlib1g-dev
+
+
+
