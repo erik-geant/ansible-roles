@@ -1,5 +1,5 @@
 ---
 dependencies:
-  - { role: postgres }
-  - { role: nginx }
-  - { role: virtualenv, using_python3: no }
+  - { role: postgres, become: true }
+  - { role: nginx, become: true }
+  - { role: virtualenv, using_python3: no, become: true }

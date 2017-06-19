@@ -1,0 +1,39 @@
+---
+- include: db-setup.yml
+- include: ssl-setup.yml
+
+- name: copy uwsgi indico.ini 
+  become: true
+  copy:
+    src: uwsgi_indico.ini
+    dest: /etc/uwsgi/apps-available/indico.ini
+    owner: root
+    group: root
+    mode: 0644
+
+- name: link apps-available/indico.ini to apps-enabled
+  become: true
+  file:
+    src: /etc/uwsgi/apps-available/indico.ini
+    dest: /etc/uwsgi/apps-enabled/indico.ini
+    state: link
+
+- name: copy nginx indico.ini
+  become: true
+  template:
+    src: nginx_indico.ini
+    dest: /etc/nginx/conf.d/indico.conf
+    owner: root
+    group: root
+    mode: 0644
+#  notify: reload nginx
+
+- name: copy systemd celery service file
+  become: true
+  copy:
+    src: indico-celery.service
+    dest: /etc/systemd/system/indico-celery.service
+    owner: root
+    group: root
+    mode: 0644
+#  notify: reload celery

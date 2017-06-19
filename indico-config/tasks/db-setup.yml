@@ -1,0 +1,37 @@
+---
+- name: install psycopg2
+  become: true
+  pip:
+    name: psycopg2
+    state: present
+
+- name: create db
+  become: true
+  become_user: postgres
+  postgresql_db:
+    name: indico
+    state: present
+
+- name: create db user
+  become: true
+  become_user: postgres
+  postgresql_user:
+    db: indico
+    name: indico
+    password: indico
+    state: present
+
+- name: enable unaccent db extension
+  become: true
+  become_user: postgres
+  postgresql_ext:
+    db: indico
+    name: unaccent
+
+- name: enable pg_trgm db extension 
+  become: true
+  become_user: postgres
+  postgresql_ext:
+    db: indico
+    name: pg_trgm 
+

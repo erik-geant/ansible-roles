@@ -1,5 +1,6 @@
 ---
 - name: install package dependencies
+  become: true
   apt: name={{item}} state=installed
   with_items:
     - libxslt1-dev
@@ -13,14 +14,38 @@
     - uwsgi-plugin-python
 
 #- name: install libjpeg turbo dev (debian)
+#  become: true
 #  apt:
 #    name: libjpeg62-turbo-dev
 
 - name: install libjpeg turbo dev (ubuntu)
+  become: true
   apt: name={{item}} state=installed
   with_items:
     - libjpeg-turbo8-dev
     - zlib1g-dev
 
+- name: create indico user
+  become: true
+  user:
+    name: indico
+    comment: "Indico user"
+    system: yes
+    createhome: yes
+    group: nginx
+    home: /opt/indico
+    shell: /bin/bash
 
+- name: copy source dist
+  copy:
+    src: "{{ INDICO_DIST }}"
+    dest: /tmp/ 
+    mode: 0644
+
+- name: install indico in a virtualenv
+  become: true
+  become_user: indico
+  pip:
+    name: /tmp/{{ INDICO_DIST }}
+    virtualenv: ~/.venv
 
