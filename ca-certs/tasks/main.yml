@@ -1,0 +1,5 @@
+---
+- name: install ca certs
+  apt:
+    name: ca-certificates
+    state: latest

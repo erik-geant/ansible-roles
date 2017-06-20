@@ -1,0 +1,3 @@
+---
+dependencies:
+  - { role: ca-certs, become: true }
