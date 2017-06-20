@@ -13,10 +13,11 @@
     - uwsgi
     - uwsgi-plugin-python
 
-#- name: install libjpeg turbo dev (debian)
-#  become: true
-#  apt:
-#    name: libjpeg62-turbo-dev
+- name: install libjpeg turbo dev (debian)
+  become: true
+  apt:
+    name: libjpeg62-turbo-dev
+  when: ansible_distribution == "Debian"
 
 - name: install libjpeg turbo dev (ubuntu)
   become: true
@@ -24,6 +25,7 @@
   with_items:
     - libjpeg-turbo8-dev
     - zlib1g-dev
+  when: ansible_distribution == "Ubuntu"
 
 - name: create indico user
   become: true
