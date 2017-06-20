@@ -1,0 +1,43 @@
+---
+- name: set directory permissions
+  become: true
+  become_user: indico
+  shell: |
+    mkdir ~/log/nginx
+    chmod go-rwx ~/* ~/.*
+    chmod 710 ~/ ~/archive ~/assets ~/cache ~/log ~/tmp
+    chmod 750 ~/web ~/.venv
+    chmod g+w ~/log/nginx
+
+- name: update indico.conf
+  become: true
+  become_user: indico
+  lineinfile:
+    name: ~/etc/indico.conf
+    line: "StaticFileMethod = ('xaccelredirect', {'/opt/indico': '/.xsf/indico'})"
+    regexp: "^StaticFileMethod.*"
+    state: present
+    insertafter: EOF
+
+- name: restart relevant services
+  become: true
+  systemd:
+    name: "{{item}}"
+    state: restarted
+  with_items:
+    - uwsgi.service
+    - nginx.service
+    - indico-celery.service
+
+- name: enable relevant services
+  become: true
+  systemd:
+    name: "{{item}}"
+    enabled: yes
+    masked: no
+  with_items:
+    - uwsgi.service
+    - nginx.service
+    - postgresql.service
+    - redis-server.service
+    - indico-celery.service
