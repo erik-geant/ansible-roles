@@ -1,0 +1,23 @@
+---
+- name: install git
+  apt:
+    name: git
+    state: installed
+
+- name: clone indico repo
+  become: true
+  become_user: indico
+  git:
+    repo: https://github.com/indico/indico.git
+    dest: ~/indico
+
+- name: install indico in a virtualenv
+  become: true
+  become_user: indico
+  pip:
+    editable: true
+    name: ~/indico
+    virtualenv: ~/.venv
+
+
+
