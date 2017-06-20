@@ -5,21 +5,22 @@
     name: psycopg2
     state: present
 
+- name: create db user
+  become: true
+  become_user: postgres
+  postgresql_user:
+#    db: indico
+    name: indico
+#    password: indico
+    state: present
+
 - name: create db
   become: true
   become_user: postgres
   postgresql_db:
     name: indico
     state: present
-
-- name: create db user
-  become: true
-  become_user: postgres
-  postgresql_user:
-    db: indico
-    name: indico
-    password: indico
-    state: present
+    owner: indico
 
 - name: enable unaccent db extension
   become: true
