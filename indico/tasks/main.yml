@@ -36,16 +36,25 @@
     home: /opt/indico
     shell: /bin/bash
 
-- name: copy source dist
-  copy:
-    src: "{{ INDICO_DIST }}"
-    dest: /tmp/ 
-    mode: 0644
+#- name: copy source dist
+#  copy:
+#    src: "{{ INDICO_DIST }}"
+#    dest: /tmp/ 
+#    mode: 0644
+
+#- name: install indico in a virtualenv
+#  become: true
+#  become_user: indico
+#  pip:
+#    name: /tmp/{{ INDICO_DIST }}
+#    virtualenv: ~/.venv
 
 - name: install indico in a virtualenv
   become: true
   become_user: indico
   pip:
-    name: /tmp/{{ INDICO_DIST }}
+    name: indico
+    version: 1.9.11.dev3
     virtualenv: ~/.venv
+
 
