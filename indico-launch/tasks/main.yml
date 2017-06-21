@@ -19,6 +19,11 @@
     state: present
     insertafter: EOF
 
+- name: create db schema
+  become: true
+  become_user: indico
+  shell: ~/.venv/bin/indico db prepare
+
 - name: restart relevant services
   become: true
   systemd:
