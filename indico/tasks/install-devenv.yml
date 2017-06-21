@@ -63,11 +63,14 @@
   args:
     chdir: ~/indico
 
-- name: install indico in a virtualenv
+- name: install indico in the virtualenv
   become: true
   become_user: indico
   pip:
-    editable: true
+#    editable: true
+    # editable doesn't work:
+    #   https://github.com/ansible/ansible-modules-core/issues/3923
+    extra_args: -e
     name: ~/indico
     virtualenv: ~/.venv
 
