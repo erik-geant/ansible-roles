@@ -51,15 +51,15 @@
 #    name: /tmp/{{ INDICO_DIST }}
 #    virtualenv: ~/.venv
 
-- include: github-install.yml
-  when: indico_version is not defined
-
 - name: install python-dev
   become: true
   apt:
     name: python-dev
 #    name: python3-dev
     state: installed
+
+- include: install-devenv.yml
+  when: indico_version is not defined
 
 - name: install indico in a virtualenv
   become: true
@@ -69,5 +69,4 @@
     version: "{{ indico_version }}"
     virtualenv: ~/.venv
   when: indico_version is defined
-
 
