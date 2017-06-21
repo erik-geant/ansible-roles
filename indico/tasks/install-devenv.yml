@@ -1,5 +1,6 @@
 ---
 - name: install git
+  become: true
   apt:
     name: git
     state: installed
@@ -10,6 +11,57 @@
   git:
     repo: https://github.com/indico/indico.git
     dest: ~/indico
+
+- name: install openssl headers
+  become: true
+  apt:
+    name: libssl-dev
+    state: installed
+
+- name: install indico requirements
+  become: true
+  become_user: indico
+  pip:
+    requirements: ~/indico/requirements.txt
+    virtualenv: ~/.venv
+
+- name: install indico dev requirements
+  become: true
+  become_user: indico
+  pip:
+    requirements: ~/indico/requirements.dev.txt
+    virtualenv: ~/.venv
+
+# cf. https://linuxconfig.org/how-to-install-nodejs-on-debian-9-stretch-linux
+- name: download nodejs repo setup script
+  get_url:
+    url: https://deb.nodesource.com/setup_6.x
+    dest: /tmp/setup_6.x
+    mode: 0755
+
+- name: exec nodejs repo setup script
+  become: true
+  shell: /tmp/setup_6.x
+
+
+- name: install nodejs
+  become: true
+  apt:
+    name: nodejs
+    state: installed
+
+- name: install jre
+  become: true
+  apt:
+    name: default-jre
+    state: installed
+
+- name: download/build fab dependencies
+  become: true
+  become_user: indico
+  shell: ~/.venv/bin/fab setup_deps:system_node=true
+  args:
+    chdir: ~/indico
 
 - name: install indico in a virtualenv
   become: true
