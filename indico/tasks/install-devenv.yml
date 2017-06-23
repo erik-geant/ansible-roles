@@ -12,6 +12,14 @@
     repo: https://github.com/indico/indico.git
     dest: ~/indico
 
+- name: make source dir group readable (nginx)
+  become: true
+  become_user: indico
+  file:
+    src: ~/indico
+    state: directory
+    mode: "g+rx"
+
 - name: install openssl headers
   become: true
   apt:
