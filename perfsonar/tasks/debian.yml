@@ -1,4 +1,9 @@
 ---
+- name: add perfsonar key
+  apt_key:
+    url: http://downloads.perfsonar.net/debian/perfsonar-debian-official.gpg.key
+    state: present
+
 - name: add perfsonar dist repo
   get_url:
 #    url: http://downloads.perfsonar.net/debian/perfsonar-wheezy-release.list
@@ -6,11 +11,6 @@
     url: http://downloads.perfsonar.net/debian/perfsonar-{{ ansible_distribution_release }}-release.list 
     dest: /etc/apt/sources.list.d/
     mode: 0644
-
-- name: add perfsonar key
-  apt_key:
-    url: http://downloads.perfsonar.net/debian/perfsonar-debian-official.gpg.key
-    state: present
 
 - name: update apt cache
   apt:
