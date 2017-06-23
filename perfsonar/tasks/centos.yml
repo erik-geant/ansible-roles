@@ -3,6 +3,7 @@
   yum:
     name: epel-release
     state: present
+    update_cache: yes
 
 - name: add internet2 repo rpm
   yum:
@@ -13,7 +14,6 @@
   yum:
     name: perfsonar-testpoint
     state: present
-    update_cache: yes
 
 - name: install perfSONAR toolkit
   yum:
