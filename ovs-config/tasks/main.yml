@@ -43,11 +43,11 @@
     owner: root
     group: root
   
-- name: download debian_wheezy_amd64_standard.qcow2 
-  get_url:
-    url:  https://people.debian.org/~aurel32/qemu/amd64/debian_wheezy_amd64_standard.qcow2 
-    dest: /images
-    owner: root
-    group: root
-    mode: 0644
+#- name: download debian_wheezy_amd64_standard.qcow2
+#  get_url:
+#    url:  https://people.debian.org/~aurel32/qemu/amd64/debian_wheezy_amd64_standard.qcow2
+#    dest: /images
+#    owner: root
+#    group: root
+#    mode: 0644
 
