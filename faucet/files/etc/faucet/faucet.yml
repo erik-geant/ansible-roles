@@ -192,9 +192,9 @@ dps:
                 name: "port1.0.38"
                 description: "port1.0.38"
             39:
-                native_vlan: office
+                native_vlan: sysadmin
                 name: "port1.0.39"
-                description: "port1.0.39"
+                description: "2-19 shared switch in erik's office"
             40:
                 native_vlan: office
                 name: "port1.0.40"

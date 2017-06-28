@@ -36,9 +36,11 @@ SDNCA_PATCH_PORTS = {
     "2-4": { "port": 13 },
     "2-6": { "port": 14 },
     "2-7": { "port": 15,
-        "vlan": "sysadmin", "info": "dick and max" },
+        "vlan": "sysadmin", "info": "dick and max"},
     "2-9": { "port": 16,
         "vlan": "sysadmin", "info": "camera, ruud etc."},
+    "2-19": { "port": 39,
+        "vlan": "sysadmin", "info": "shared switch in erik's office"},
 
     "3-5": { "port": 33, "vlan": "voip" },
     "3-11": { "port": 34, "vlan": "voip" },
