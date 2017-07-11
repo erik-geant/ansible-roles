@@ -16,7 +16,7 @@
   become: true
   become_user: indico
   file:
-    src: ~/indico
+    path: ~/indico
     state: directory
     mode: "g+rx"
 
