@@ -24,6 +24,22 @@
   become_user: indico
   shell: ~/.venv/bin/indico db prepare
 
+
+- name: check if this is a development installation
+  become: true
+  become_user: indico
+  stat:
+    path: ~/indico
+  register: check_path
+
+- name: make source dir group readable (nginx)
+  become: true
+  become_user: indico
+  file:
+    path: ~/indico
+    state: directory
+    mode: "g+rx"
+
 - name: restart relevant services
   become: true
   systemd:
