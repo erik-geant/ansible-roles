@@ -64,6 +64,13 @@
     name: default-jre
     state: installed
 
+# needed by fab build
+- name: install curl
+  become: true
+  apt:
+    name: curl
+    state: installed
+
 - name: download/build fab dependencies
   become: true
   become_user: indico
