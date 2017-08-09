@@ -1,0 +1,32 @@
+---
+- name: add perfsonar key
+  apt_key:
+    url: http://downloads.perfsonar.net/debian/perfsonar-debian-official.gpg.key
+    state: present
+
+- name: add perfsonar dist repo
+  get_url:
+#    url: http://downloads.perfsonar.net/debian/perfsonar-wheezy-release.list
+#    url: http://downloads.perfsonar.net/debian/perfsonar-jessie-release.list 
+    url: http://downloads.perfsonar.net/debian/perfsonar-{{ ansible_distribution_release }}-release.list 
+    dest: /etc/apt/sources.list.d/
+    mode: 0644
+
+- name: update apt cache
+  apt:
+    update_cache: true
+
+- name: install testpoint
+  apt:
+    name: perfsonar-testpoint
+    state: present
+
+- name: install toolkit
+  apt:
+    name: perfsonar-toolkit
+    state: present
+  tags:
+    - toolkit
+
+
+

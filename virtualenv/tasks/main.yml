@@ -1,12 +1,15 @@
 ---
-- name: update apt cache
-  apt:
-    update_cache: true
-
 - name: install pip
   apt:
     name: python-pip
     state: latest
+  when: not using_python3
+
+- name: install pip3
+  apt:
+    name: python3-pip
+    state: latest
+  when: using_python3
 
 - name: upgrade pip
   pip:

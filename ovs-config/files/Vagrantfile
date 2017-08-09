@@ -1,0 +1,20 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/xenial64"
+#  config.vm.box = "debian/jessie64"
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = 1024
+  end
+
+  config.vm.network "public_network", bridge: "vport1"
+#  config.vm.network "public_network", bridge: "eth0"
+
+
+
+
+  config.vm.provision "shell", inline: <<-SHELL
+    apt -y update
+    apt install -y python-minimal
+  SHELL
+
+end

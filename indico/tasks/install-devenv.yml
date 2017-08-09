@@ -1,0 +1,93 @@
+---
+- name: install git
+  become: true
+  apt:
+    name: git
+    state: installed
+
+- name: clone indico repo
+  become: true
+  become_user: indico
+  git:
+    repo: https://github.com/indico/indico.git
+    dest: ~/indico
+
+- name: make source dir group readable (nginx)
+  become: true
+  become_user: indico
+  file:
+    path: ~/indico
+    state: directory
+    mode: "g+rx"
+
+- name: install openssl headers
+  become: true
+  apt:
+    name: libssl-dev
+    state: installed
+
+- name: install indico requirements
+  become: true
+  become_user: indico
+  pip:
+    requirements: ~/indico/requirements.txt
+    virtualenv: ~/.venv
+
+- name: install indico dev requirements
+  become: true
+  become_user: indico
+  pip:
+    requirements: ~/indico/requirements.dev.txt
+    virtualenv: ~/.venv
+
+# cf. https://linuxconfig.org/how-to-install-nodejs-on-debian-9-stretch-linux
+- name: download nodejs repo setup script
+  get_url:
+    url: https://deb.nodesource.com/setup_6.x
+    dest: /tmp/setup_6.x
+    mode: 0755
+
+- name: exec nodejs repo setup script
+  become: true
+  shell: /tmp/setup_6.x
+
+
+- name: install nodejs
+  become: true
+  apt:
+    name: nodejs
+    state: installed
+
+- name: install jre
+  become: true
+  apt:
+    name: default-jre
+    state: installed
+
+# needed by fab build
+- name: install curl
+  become: true
+  apt:
+    name: curl
+    state: installed
+
+- name: download/build fab dependencies
+  become: true
+  become_user: indico
+  shell: ~/.venv/bin/fab setup_deps:system_node=true
+  args:
+    chdir: ~/indico
+
+- name: install indico in the virtualenv
+  become: true
+  become_user: indico
+  pip:
+#    editable: true
+    # editable doesn't work:
+    #   https://github.com/ansible/ansible-modules-core/issues/3923
+    extra_args: -e
+    name: ~/indico
+    virtualenv: ~/.venv
+
+
+

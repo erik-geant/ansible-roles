@@ -1,0 +1,14 @@
+[Unit]
+Description=Indico Celery
+After=network.target
+
+[Service]
+ExecStart=/opt/indico/.venv/bin/indico celery worker -B
+Restart=always
+SyslogIdentifier=indico-celery
+User=indico
+Group=nginx
+Type=simple
+
+[Install]
+WantedBy=multi-user.target

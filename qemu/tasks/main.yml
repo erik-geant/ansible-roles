@@ -1,0 +1,16 @@
+---
+- name: install qemu packages (stretch [v9] and newer)
+  apt: name={{item}} state=installed
+  with_items:
+    - qemu-kvm
+    - libvirt-clients
+    - libvirt-daemon-system
+  when: ansible_os_family == "Debian" and ansible_lsb.major_release|int >= 9
+
+- name: install qemu packages (jessie [v8] and older)
+  apt: name={{item}} state=installed
+  with_items:
+    - qemu-kvm
+    - libvirt-bin
+  when: ansible_os_family == "Debian" and ansible_lsb.major_release|int < 9
+

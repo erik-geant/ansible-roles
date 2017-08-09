@@ -1,0 +1,14 @@
+---
+- name: create cert dir
+  become: true
+  file:
+    path: /etc/ssl/nginx
+    state: directory
+    owner: root
+    group: root
+    mode: 0700
+
+- name: create self-signed cert
+  become: true
+  command: openssl req -x509 -nodes -newkey rsa:4096 -subj /CN={{ HOSTNAME }} -days 3650 -keyout /etc/ssl/nginx/indico.key -out /etc/ssl/nginx/indico.crt
+

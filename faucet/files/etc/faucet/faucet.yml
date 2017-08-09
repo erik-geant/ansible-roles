@@ -1,27 +1,33 @@
 version: 2
 vlans:
-    2:
+    sysadmin:
         name: "Sysadmin"
+        vid: 2
         unicast_flood: True
-    3:
+    voip:
         name: "VoIP"
+        vid: 3
         unicast_flood: True
-    4:
+    office:
         name: "Office"
+        vid: 4
         unicast_flood: True
-    7:
+    guests:
         name: "Guests"
+        vid: 7
         unicast_flood: True
-    20:
+    ipv6-only:
         name: "IPv6 only"
+        vid: 20
         unicast_flood: True
-    983:
+    tombs-managment-network:
         name: "TOMBS managment network"
+        vid: 983
         unicast_flood: True
-    984:
+    tombs-vm-network:
         name: "TOMBS VM network"
+        vid: 984
         unicast_flood: True
-
 acls:
     101:
         - rule:
@@ -32,26 +38,367 @@ acls:
             actions:
                 allow: 0
 dps:
-    windscale-faucet-1:
+    at510-top:
         dp_id: 0x1aeb949202
         description: "SDNCA"
         hardware: "Allied-Telesis"
         interfaces:
             2:
-                tagged_vlans: [2,3,4,7,20,983,984]
+                tagged_vlans: [sysadmin,voip,office,guests,ipv6-only,tombs-managment-network,tombs-vm-network]
                 name: "port1.0.2"
-                description: "vek-x"
+                description: "lan trunk"
+            3:
+                native_vlan: office
+                name: "port1.0.3"
+                description: "1-12"
+            4:
+                native_vlan: office
+                name: "port1.0.4"
+                description: "2-2"
+            5:
+                native_vlan: office
+                name: "port1.0.5"
+                description: "1-2"
+            6:
+                native_vlan: office
+                name: "port1.0.6"
+                description: "1-11"
+            7:
+                native_vlan: office
+                name: "port1.0.7"
+                description: "1-17"
+            8:
+                native_vlan: office
+                name: "port1.0.8"
+                description: "1-18"
+            9:
+                native_vlan: office
+                name: "port1.0.9"
+                description: "1-19"
+            10:
+                native_vlan: office
+                name: "port1.0.10"
+                description: "2-3"
+            11:
+                native_vlan: office
+                name: "port1.0.11"
+                description: "1-22"
+            12:
+                native_vlan: office
+                name: "port1.0.12"
+                description: "1-24"
+            13:
+                native_vlan: office
+                name: "port1.0.13"
+                description: "2-4"
+            14:
+                native_vlan: office
+                name: "port1.0.14"
+                description: "2-6"
+            15:
+                native_vlan: sysadmin
+                name: "port1.0.15"
+                description: "2-7 dick and max"
+            16:
+                native_vlan: sysadmin
+                name: "port1.0.16"
+                description: "2-9 camera, ruud etc."
+            17:
+                native_vlan: office
+                name: "port1.0.17"
+                description: "port1.0.17"
+            18:
+                native_vlan: office
+                name: "port1.0.18"
+                description: "port1.0.18"
+            19:
+                native_vlan: office
+                name: "port1.0.19"
+                description: "port1.0.19"
+            20:
+                native_vlan: office
+                name: "port1.0.20"
+                description: "port1.0.20"
+            21:
+                native_vlan: office
+                name: "port1.0.21"
+                description: "port1.0.21"
+            22:
+                native_vlan: office
+                name: "port1.0.22"
+                description: "port1.0.22"
+            23:
+                native_vlan: office
+                name: "port1.0.23"
+                description: "port1.0.23"
+            24:
+                native_vlan: office
+                name: "port1.0.24"
+                description: "port1.0.24"
+            25:
+                native_vlan: office
+                name: "port1.0.25"
+                description: "port1.0.25"
+            26:
+                native_vlan: office
+                name: "port1.0.26"
+                description: "port1.0.26"
+            27:
+                native_vlan: office
+                name: "port1.0.27"
+                description: "port1.0.27"
+            28:
+                native_vlan: office
+                name: "port1.0.28"
+                description: "port1.0.28"
+            29:
+                native_vlan: office
+                name: "port1.0.29"
+                description: "port1.0.29"
+            30:
+                native_vlan: office
+                name: "port1.0.30"
+                description: "port1.0.30"
+            31:
+                native_vlan: office
+                name: "port1.0.31"
+                description: "port1.0.31"
+            32:
+                native_vlan: office
+                name: "port1.0.32"
+                description: "port1.0.32"
+            33:
+                native_vlan: voip
+                name: "port1.0.33"
+                description: "3-5"
+            34:
+                native_vlan: voip
+                name: "port1.0.34"
+                description: "3-11"
+            35:
+                native_vlan: voip
+                name: "port1.0.35"
+                description: "4-11"
+            36:
+                native_vlan: voip
+                name: "port1.0.36"
+                description: "6-9"
             37:
-                native_vlan: 4
+                native_vlan: office
                 name: "port1.0.37"
-                description: "port #18 near Erik's desk"
+                description: "port1.0.37"
             38:
-                native_vlan: 4
+                native_vlan: office
                 name: "port1.0.38"
-                description: "port #17 near Erik's desk"
-
+                description: "port1.0.38"
             39:
-                native_vlan: 4
+                native_vlan: sysadmin
                 name: "port1.0.39"
-                description: "port #19 near Claus' desk"
+                description: "2-19 shared switch in erik's office"
+            40:
+                native_vlan: office
+                name: "port1.0.40"
+                description: "port1.0.40"
+            41:
+                native_vlan: office
+                name: "port1.0.41"
+                description: "port1.0.41"
+            42:
+                native_vlan: office
+                name: "port1.0.42"
+                description: "port1.0.42"
+
+    at510-bottom:
+        dp_id: 0x1aeb95277d
+        description: "SDNCB"
+        hardware: "Allied-Telesis"
+        interfaces:
+            2:
+                tagged_vlans: [sysadmin,voip,office,guests,ipv6-only,tombs-managment-network,tombs-vm-network]
+                name: "port1.0.2"
+                description: "lan trunk"
+            3:
+                native_vlan: office
+                name: "port1.0.3"
+                description: "port1.0.3"
+            4:
+                native_vlan: office
+                name: "port1.0.4"
+                description: "port1.0.4"
+            5:
+                native_vlan: office
+                name: "port1.0.5"
+                description: "port1.0.5"
+            6:
+                native_vlan: office
+                name: "port1.0.6"
+                description: "port1.0.6"
+            7:
+                native_vlan: office
+                name: "port1.0.7"
+                description: "port1.0.7"
+            8:
+                native_vlan: office
+                name: "port1.0.8"
+                description: "port1.0.8"
+            9:
+                native_vlan: office
+                name: "port1.0.9"
+                description: "port1.0.9"
+            10:
+                native_vlan: office
+                name: "port1.0.10"
+                description: "port1.0.10"
+            11:
+                native_vlan: office
+                name: "port1.0.11"
+                description: "port1.0.11"
+            12:
+                native_vlan: office
+                name: "port1.0.12"
+                description: "port1.0.12"
+            13:
+                native_vlan: office
+                name: "port1.0.13"
+                description: "port1.0.13"
+            14:
+                native_vlan: office
+                name: "port1.0.14"
+                description: "port1.0.14"
+            15:
+                native_vlan: office
+                name: "port1.0.15"
+                description: "port1.0.15"
+            16:
+                native_vlan: office
+                name: "port1.0.16"
+                description: "port1.0.16"
+            17:
+                native_vlan: office
+                name: "port1.0.17"
+                description: "port1.0.17"
+            18:
+                native_vlan: office
+                name: "port1.0.18"
+                description: "port1.0.18"
+            19:
+                native_vlan: office
+                name: "port1.0.19"
+                description: "port1.0.19"
+            20:
+                native_vlan: office
+                name: "port1.0.20"
+                description: "port1.0.20"
+            21:
+                native_vlan: office
+                name: "port1.0.21"
+                description: "port1.0.21"
+            22:
+                native_vlan: office
+                name: "port1.0.22"
+                description: "port1.0.22"
+            23:
+                native_vlan: office
+                name: "port1.0.23"
+                description: "port1.0.23"
+            24:
+                native_vlan: office
+                name: "port1.0.24"
+                description: "port1.0.24"
+            25:
+                native_vlan: office
+                name: "port1.0.25"
+                description: "port1.0.25"
+            26:
+                native_vlan: office
+                name: "port1.0.26"
+                description: "port1.0.26"
+            27:
+                native_vlan: office
+                name: "port1.0.27"
+                description: "port1.0.27"
+            28:
+                native_vlan: office
+                name: "port1.0.28"
+                description: "port1.0.28"
+            29:
+                native_vlan: office
+                name: "port1.0.29"
+                description: "port1.0.29"
+            30:
+                native_vlan: office
+                name: "port1.0.30"
+                description: "port1.0.30"
+            31:
+                native_vlan: office
+                name: "port1.0.31"
+                description: "port1.0.31"
+            32:
+                native_vlan: office
+                name: "port1.0.32"
+                description: "port1.0.32"
+            33:
+                native_vlan: office
+                name: "port1.0.33"
+                description: "port1.0.33"
+            34:
+                native_vlan: office
+                name: "port1.0.34"
+                description: "port1.0.34"
+            35:
+                native_vlan: office
+                name: "port1.0.35"
+                description: "port1.0.35"
+            36:
+                native_vlan: office
+                name: "port1.0.36"
+                description: "port1.0.36"
+            37:
+                native_vlan: office
+                name: "port1.0.37"
+                description: "port1.0.37"
+            38:
+                native_vlan: office
+                name: "port1.0.38"
+                description: "port1.0.38"
+            39:
+                native_vlan: office
+                name: "port1.0.39"
+                description: "port1.0.39"
+            40:
+                native_vlan: office
+                name: "port1.0.40"
+                description: "port1.0.40"
+            41:
+                native_vlan: office
+                name: "port1.0.41"
+                description: "port1.0.41"
+            42:
+                native_vlan: office
+                name: "port1.0.42"
+                description: "port1.0.42"
+            43:
+                native_vlan: office
+                name: "port1.0.43"
+                description: "port1.0.43"
+            44:
+                native_vlan: office
+                name: "port1.0.44"
+                description: "port1.0.44"
+            45:
+                native_vlan: office
+                name: "port1.0.45"
+                description: "port1.0.45"
+            46:
+                native_vlan: office
+                name: "port1.0.46"
+                description: "port1.0.46"
+            47:
+                native_vlan: office
+                name: "port1.0.47"
+                description: "port1.0.47"
+            48:
+                native_vlan: sysadmin
+                name: "port1.0.48"
+                description: "2-17 by erik's desk"
 
