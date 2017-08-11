@@ -1,0 +1,24 @@
+---
+- name: create vm startup script
+  template:
+    src: qemu-startup.sh.j2
+    dest: /root/{{ vm_name }}-startup.sh
+    mode: 0755
+    owner: root
+    group: root
+
+- name: create vm service config
+  template:
+    src: systemd.service.j2
+    dest: /etc/systemd/system/{{ vm_name }}.service
+    mode: 0644
+    owner: root
+    group: root
+  vars:
+    exec_start: "/root/{{ vm_name }}-startup.sh"
+
+- name: make sure vm service is running
+  systemd:
+    name: "{{ vm_name }}"
+    enabled: yes
+    state: started

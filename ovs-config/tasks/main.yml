@@ -24,10 +24,21 @@
 #     group: root
 #     mode: 0644
 
+- name: install ovs setup helper script
+  template:
+    src: ovs-setup.sh.j2
+    dest: /root/ovs-setup.sh
+    owner: root
+    group: root
+    mode: 0755
+
+- name: run ovs setup helper script
+  shell: /root/ovs-setup.sh
+
 - name: install qemu-ifup/down
-  copy:
-    src: "{{ item }}"
-    dest: /etc
+  template:
+    src: "{{ item }}.j2"
+    dest: "/etc/{{ item }}"
     owner: root
     group: root
     mode: 0755
@@ -64,52 +75,16 @@
 #     owner: root
 #     group: root
 #     mode: 0644
- 
-- name: create faucet vm startup script
-  template:
-    src: qemu-startup.sh.j2
-    dest: /root/faucet-startup.sh
-    mode: 0755
-    owner: root
-    group: root
+
+- include: vm.yml
   vars:
     vm_name: faucet
     vnc_idx: 1
 
-- name: create faucet vm service config
-  template:
-    src: systemd.service.j2
-    dest: /etc/systemd/system/faucet.service
-    mode: 0644
-    owner: root
-    group: root
-  vars:
-    vm_name: faucet
-    exec_start: /root/faucet-startup.sh
-
-
-- name: create gauge vm startup script
-  template:
-    src: qemu-startup.sh.j2
-    dest: /root/gauge-startup.sh
-    mode: 0755
-    owner: root
-    group: root
+- include: vm.yml
   vars:
     vm_name: gauge
     vnc_idx: 2
-
-- name: create gauge vm service config
-  template:
-    src: systemd.service.j2
-    dest: /etc/systemd/system/gauge.service
-    mode: 0644
-    owner: root
-    group: root
-  vars:
-    vm_name: gauge
-    exec_start: /root/gauge-startup.sh
-
 
 
 #- name: configure lan interface
