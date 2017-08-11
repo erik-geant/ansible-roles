@@ -1,0 +1,20 @@
+---
+- name: copy geant guest network config
+  copy:
+    src: geant-guest.conf
+    dest: /etc/wpa_supplicant/geant-guest.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: configure wireless interface
+  template:
+    src: wireless-interface.j2
+    dest: /etc/network/interfaces.d/wireless-interface
+
+- name: configure lan interface
+  template:
+    src: ethernet-interface.j2
+    dest: /etc/network/interfaces.d/lan-interface
+
+
