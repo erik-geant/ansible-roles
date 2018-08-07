@@ -1,0 +1,4 @@
+ovs-vsctl --may-exist add-br {{ bridge_name }}
+ovs-vsctl --may-exist add-port {{ bridge_name }} {{ lan_ifcname }} 
+ip address flush {{ lan_ifcname }}
+dhclient {{ bridge_name }}

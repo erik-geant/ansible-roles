@@ -3,4 +3,4 @@
 ip tuntap add mode tap $1
 ip link set dev $1 up
 
-ovs-vsctl --may-exist add-port mybridge $1
+ovs-vsctl --may-exist add-port {{ bridge_name }}  $1

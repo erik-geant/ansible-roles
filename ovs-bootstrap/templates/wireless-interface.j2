@@ -1,0 +1,6 @@
+auto {{ wifi_ifcname }} 
+
+iface {{ wifi_ifcname }} inet dhcp
+  wpa-conf /etc/wpa_supplicant/geant-guest.conf
+
+iface {{ wifi_ifcname }} inet6 auto

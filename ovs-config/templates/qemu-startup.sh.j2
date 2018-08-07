@@ -1,0 +1,24 @@
+#!/bin/sh
+
+if [ ! -f /images/{{ vm_name }}.qcow2 ]; then
+    cp /images/debian_wheezy_amd64_standard.qcow2 /images/{{ vm_name }}.qcow2
+fi
+
+#qemu-system-x86_64  \
+#    -enable-kvm \
+#    -net nic \
+#    -net tap,ifname=$VMNAME \
+#    -hda $IMAGE_FILE \
+#    -m 512 \
+#    -vnc :$VNCIDX \
+#    -daemonize
+
+qemu-system-x86_64  \
+    -enable-kvm \
+    -netdev tap,ifname={{ vm_name }},id=eth \
+    -device e1000,netdev=eth,mac=52:00:00:00:00:0{{ vnc_idx }} \
+    -hda /images/{{ vm_name }}.qcow2 \
+    -m 512 \
+    -vnc :{{ vnc_idx }} \
+
+#    -daemonize 

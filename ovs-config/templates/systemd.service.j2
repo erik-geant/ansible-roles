@@ -1,0 +1,12 @@
+[Unit]
+Description="{{ vm_name }} virtual machine"
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+ExecStart={{ exec_start }}
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
